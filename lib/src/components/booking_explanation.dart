@@ -25,7 +25,7 @@ class BookingExplanation extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         Text(text,
-            style: themeData.textTheme.bodyLarge
+            style: themeData.textTheme.bodyText1
                 ?.copyWith(fontWeight: FontWeight.bold)),
       ],
     );

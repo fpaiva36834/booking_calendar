@@ -5,7 +5,6 @@ class MockStream extends Mock implements Stream<int> {}
 void main() async {
   var stream = MockStream();
   when(stream.first).thenAnswer((_) => Future.value(7));
-  // ignore: avoid_print
   print(await stream.first);
 
   when(stream.listen(any)).thenAnswer((Invocation invocation) {
@@ -16,6 +15,5 @@ void main() async {
     return callback;
   });
 
-  // ignore: avoid_print
-  stream.listen((e) async => print(e));
+  stream.listen((e) async => print(await e));
 }

@@ -33,8 +33,8 @@ class _BookingCalendarDemoAppState
     mockBookingService = BookingService(
       serviceName: 'Mock Service',
       serviceDuration: 60,
-      bookingStart: DateTime(2024, 8, 18, 8, 0),
-      bookingEnd: DateTime(2024, 8, 18, 8, 0),
+      bookingStart: DateTime(2024, 8, 18, 10, 0), // 10:00 AM
+      bookingEnd: DateTime(2024, 8, 18, 11, 0), // 11:00 AM
     );
 
     mockBookingController = BookingController(
@@ -48,21 +48,18 @@ class _BookingCalendarDemoAppState
   Stream<dynamic>? getBookingStreamMock(
       {required DateTime end, required DateTime start}) {
     // Mock data
-
-    // get appwrite booking by day
-
     final bookings = [
       {
-        'bookingStart': "2024-01-15T10:10:00.000+08:00",
+        'bookingStart': "2023-10-15T10:00:00.000+08:00",
         'bookingEnd':
-            "2024-01-15T11:10:00.000+08:00", // Just an example for the end time
+            "2023-10-15T11:00:00.000+08:00", // Just an example for the end time
       },
 
       // ... add more mock bookings as needed
       {
-        'bookingStart': "2024-01-06T16:00:00.000+00:00",
+        'bookingStart': "2023-08-28T12:00:00.000+00:00",
         'bookingEnd':
-            "2024-01-06T17:00:00.000+00:00", // Just an example for the end time
+            "2023-08-28T13:00:00.000+00:00", // Just an example for the end time
       }
     ];
 
@@ -93,7 +90,6 @@ class _BookingCalendarDemoAppState
     if (newBooking.bookingStart != null && newBooking.bookingEnd != null) {
       converted.add(DateTimeRange(
           start: newBooking.bookingStart!, end: newBooking.bookingEnd!));
-      // ignore: avoid_print
       print('${newBooking.toJson()} has been uploaded');
       setState(() {});
     }
@@ -107,11 +103,6 @@ class _BookingCalendarDemoAppState
       DateTime end = DateTime.parse(booking['bookingEnd'] as String);
       converted.add(DateTimeRange(start: start, end: end));
     }
-
-    DateTime tomorrow = now.add(const Duration(days: 1));
-    converted.add(DateTimeRange(
-        start: DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 5, 0),
-        end: DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 23, 0)));
 
     return converted;
 
@@ -132,7 +123,7 @@ class _BookingCalendarDemoAppState
     // converted.add(DateTimeRange(
     //     start: fourth, end: fourth.add(const Duration(minutes: 50))));
 
-    //book whole day example
+    // //book whole day example
     // converted.add(DateTimeRange(
     //     start: DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 5, 0),
     //     end: DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 23, 0)));
@@ -223,12 +214,13 @@ class _BookingCalendarDemoAppState
                 onBookChange: (BookingService newBooking) async {
                   await onBookSelected(context, newBooking: newBooking);
                 },
-                pauseSlotText: 'Pause',
-                hideBreakTime: true,
+                // pauseSlots: ,
+                pauseSlotText: 'LUNCH',
+                hideBreakTime: false,
                 loadingWidget: const Text('Fetching data...'),
                 // uploadingWidget: const CircularProgressIndicator(),
-                locale: 'pt_PT',
-                startingDayOfWeek: StartingDayOfWeek.monday,
+                // locale: 'hu_HU',
+                startingDayOfWeek: StartingDayOfWeek.tuesday,
                 wholeDayIsBookedWidget:
                     const Text('Sorry, for this day everything is booked'),
                 //disabledDates: [DateTime(2023, 1, 20)],
